@@ -1,13 +1,12 @@
-// For more information, see https://crawlee.dev/
 import { PlaywrightCrawler, ProxyConfiguration } from "crawlee";
 import { router } from "./routes.js";
 import { parse } from "csv-parse";
 import fs from "fs";
 
+const startUrls = [];
+
 let isAuth = fs.existsSync("./auth");
-
 let session = [];
-
 if (isAuth) {
   session = JSON.parse(fs.readFileSync("./auth"));
 }
@@ -23,17 +22,8 @@ const crawler = new PlaywrightCrawler({
   ],
   requestHandlerTimeoutSecs: 60000,
   requestHandler: router,
-  headless: false,
-  // Comment this option to scrape the full website.
-  // maxRequestsPerCrawl: 20,
+  // headless: false,
 });
-
-// await crawler.addRequests([
-
-// ],{
-//   waitBetweenBatchesMillis: 3000
-// });
-// await crawler.addRequests([{ url: "https://www.linkedin.com/in/swapnilhota/", label: "people", userData: { designation: "backend developer" } }]);
 
 // await crawler.run(
 //   [
@@ -44,7 +34,7 @@ const crawler = new PlaywrightCrawler({
 //     waitBetweenBatchesMillis: 3000,
 //   }
 // );
-const startUrls = [];
+
 fs.createReadStream("./data.csv")
   .pipe(parse({ delimiter: ",", from_line: 2 }))
   .on("data", async (row) => {
