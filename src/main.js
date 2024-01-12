@@ -52,7 +52,8 @@ fs.createReadStream("./data.csv")
     startUrls.push({
       url: row[0],
       userData: {
-        designation: row[1],
+        // replace all %20 with space
+        designation: row[0].split("=")[1].replace("%20", " "),
       },
       useExtendedUniqueKey: true,
     });
