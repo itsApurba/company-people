@@ -1,9 +1,6 @@
+# Company People 🏢👥
 
----
-
-# Company People
-
-## Installation
+## Installation 🚀
 
 Follow these steps to set up and run the project on your local machine.
 
@@ -23,7 +20,7 @@ git clone https://github.com/itsApurba/company-people.git
 ### Navigate to the Project Directory
 
 ```bash
-cd your-repository
+cd company-people
 ```
 
 ### Install Dependencies
@@ -32,9 +29,9 @@ cd your-repository
 npm i
 ```
 
-### Configuration
+### Configuration ⚙️
 
-### 1. Setting Up the Cookie
+### 1. Setting Up the Cookie 🍪
 
 1. **Install EditThisCookie Extension:**
    - Install the EditThisCookie extension from [https://www.editthiscookie.com](https://www.editthiscookie.com).
@@ -52,7 +49,7 @@ npm i
    - Paste the copied cookie into the `auth` file.
    - Remove all keys and values related to `sameSite` from the cookie.
 
-### 2. Importing the CSV
+### 2. Importing the CSV 📊
 
 1. **LinkedIn URL Format:**
    - The URL format should be `https://www.linkedin.com/company/company-name/people/?keywords=designation%20name`.
@@ -61,8 +58,7 @@ npm i
    - Move the CSV file to the root directory.
    - Rename the CSV file to `data.csv` (refer to the example).
 
-
-### Run the Script
+### Run the Script ▶️
 
 Execute the following command to run the script:
 
@@ -70,13 +66,12 @@ Execute the following command to run the script:
 npm start
 ```
 
-## Output File Location:
+## Output File Location 📂
 
 The output file will be generated at 
 ```./storage/key_value_stores/default/data.csv.```
 
-
-## Known Bugs
+## Known Bugs 🐛
 
 ### Cookie Expiration:
 
@@ -90,8 +85,7 @@ The output file will be generated at
 - **Note:**
   - Periodic regeneration of the cookie is recommended.
 
-
-## TODOs
+## TODOs 📝
 
 1. **Automate Cookie Generation Process:**
    - Implement an automated process for generating the LinkedIn cookie. 
@@ -104,8 +98,7 @@ The output file will be generated at
 3. **Direct CSV Retrieval from Google Sheets:**
    - Develop a feature to directly fetch CSV data from Google Sheets.
 
-
-## Additional Information
+## Additional Information ℹ️
 
 ### Viewing Browser (Non-Headless Mode):
 
@@ -124,3 +117,5 @@ The output file will be generated at
 
 - **Caution:**
   - Enabling non-headless mode may impact memory usage, especially when dealing with a large number of browser instances.
+
+---
