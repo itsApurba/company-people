@@ -4,17 +4,17 @@ export const router = createPlaywrightRouter();
 
 router.addDefaultHandler(async ({ page, request, enqueueLinks }) => {
   console.log(request.userData);
-  await sleep(5000);
-  const navigationItem = page.locator("li.org-page-navigation__item", { hasText: "People" });
+  // await sleep(5000);
+  // const navigationItem = page.locator("li.org-page-navigation__item", { hasText: "People" });
   //   console.log("navigationItem", await navigationItem.count());
-  if (await navigationItem.count()) {
-    await navigationItem.first().click();
-    await page.waitForSelector("input#people-search-keywords");
-    const peopleSearchKeyword = page.locator("input#people-search-keywords");
-    await peopleSearchKeyword.fill(`${request.userData.designation || "Frontend Developer"}`);
-    await peopleSearchKeyword.press("Enter");
+  // if (await navigationItem.count()) {
+  //   await navigationItem.first().click();
+  //   await page.waitForSelector("input#people-search-keywords");
+  //   const peopleSearchKeyword = page.locator("input#people-search-keywords");
+  //   await peopleSearchKeyword.fill(`${request.userData.designation || "Frontend Developer"}`);
+  //   await peopleSearchKeyword.press("Enter");
 
-    await sleep(2000);
+  //   await sleep(2000);
 
     // const peopleHeaderCount = await page
     //   .locator("div.org-people__header-spacing-carousel")
@@ -24,6 +24,7 @@ router.addDefaultHandler(async ({ page, request, enqueueLinks }) => {
     //   });
 
     for (let i = 0; i < 5; i++) {
+      console.log("enqueue", i+1);
       await enqueueLinks({
         urls: [`${await page.locator("li.org-people-profile-card__profile-card-spacing").nth(i).locator("a").nth(1).getAttribute("href")}`],
         label: "people",
@@ -40,7 +41,7 @@ router.addDefaultHandler(async ({ page, request, enqueueLinks }) => {
       });
     }
     await sleep(2000);
-  }
+  // }
 });
 
 router.addHandler("people", async ({ request, page, browserController }) => {
@@ -99,9 +100,17 @@ router.addHandler("people", async ({ request, page, browserController }) => {
   await sleep(10_000);
 
   const skills = [];
+  let skip = 0
   for (let i = 0; i < 5; i++) {
-    const skillsListItem = await page.locator(".active .mr1 span[aria-hidden='true']").nth(i).innerText();
-    skills.push(skillsListItem);
+    if(skip == 0){
+      const skillsListItem = await page.locator(".active .mr1 span[aria-hidden='true']").nth(i).innerText().catch(() => {
+        skip = 1
+        return ""
+      });
+      skills.push(skillsListItem);
+    }else{
+      break;
+    }
   }
 
   //   const newPage = await browserController.newPage();
