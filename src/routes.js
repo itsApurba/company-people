@@ -16,31 +16,31 @@ router.addDefaultHandler(async ({ page, request, enqueueLinks }) => {
 
   //   await sleep(2000);
 
-    // const peopleHeaderCount = await page
-    //   .locator("div.org-people__header-spacing-carousel")
-    //   .innerText()
-    //   .then((text) => {
-    //     return Number(text.split(" ")[0]);
-    //   });
+  // const peopleHeaderCount = await page
+  //   .locator("div.org-people__header-spacing-carousel")
+  //   .innerText()
+  //   .then((text) => {
+  //     return Number(text.split(" ")[0]);
+  //   });
 
-    for (let i = 0; i < 5; i++) {
-      console.log("enqueue", i+1);
-      await enqueueLinks({
-        urls: [`${await page.locator("li.org-people-profile-card__profile-card-spacing").nth(i).locator("a").nth(1).getAttribute("href")}`],
-        label: "people",
-        userData: {
-          designation: request.userData.designation,
-          url: request.url,
-        },
-        transformRequestFunction: (request) => {
-            request.url = request.url.split("?")[0];
-            request.keepUrlFragment = false
-            request.maxRetries = 10
-            return request;
-        }
-      });
-    }
-    await sleep(2000);
+  for (let i = 0; i < 5; i++) {
+    console.log("enqueue", i + 1);
+    await enqueueLinks({
+      urls: [`${await page.locator("li.org-people-profile-card__profile-card-spacing").nth(i).locator("a").nth(1).getAttribute("href")}`],
+      label: "people",
+      userData: {
+        designation: request.userData.designation,
+        url: request.url,
+      },
+      transformRequestFunction: (request) => {
+        request.url = request.url.split("?")[0];
+        request.keepUrlFragment = false;
+        request.maxRetries = 10;
+        return request;
+      },
+    });
+  }
+  await sleep(2000);
   // }
 });
 
@@ -100,15 +100,19 @@ router.addHandler("people", async ({ request, page, browserController }) => {
   await sleep(10_000);
 
   const skills = [];
-  let skip = 0
+  let skip = 0;
   for (let i = 0; i < 5; i++) {
-    if(skip == 0){
-      const skillsListItem = await page.locator(".active .mr1 span[aria-hidden='true']").nth(i).innerText().catch(() => {
-        skip = 1
-        return ""
-      });
+    if (skip == 0) {
+      const skillsListItem = await page
+        .locator(".active .mr1 span[aria-hidden='true']")
+        .nth(i)
+        .innerText()
+        .catch(() => {
+          skip = 1;
+          return "";
+        });
       skills.push(skillsListItem);
-    }else{
+    } else {
       break;
     }
   }
@@ -131,8 +135,8 @@ router.addHandler("people", async ({ request, page, browserController }) => {
     companyDesignation,
     gradWorkingYear,
     skills: skills.join(","),
-    designation: request.userData.designation,
-    queryCompany: request.userData.url,
+    designation: request.userData.designation.trim(),
+    queryCompany: request.userData.url.split("company/")[1].split("/")[0],
     //   workExperience,
     //   Skills,
   });
@@ -147,8 +151,8 @@ router.addHandler("people", async ({ request, page, browserController }) => {
     companyDesignation,
     gradWorkingYear,
     skills: skills.join(","),
-    designation: request.userData.designation,
-    queryCompany: request.userData.url,
+    designation: request.userData.designation.trim(),
+    queryCompany: request.userData.url.split("company/")[1].split("/")[0],
   });
 
   await Dataset.exportToCSV("data");

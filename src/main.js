@@ -8,7 +8,11 @@ const startUrls = [];
 let isAuth = fs.existsSync("./auth");
 let session = [];
 if (isAuth) {
-  session = JSON.parse(fs.readFileSync("./auth"));
+  session = JSON.parse(fs.readFileSync("./auth")).map((e) => {
+    // console.log(e);
+    const { sameSite, ...rest } = e;
+    return rest;
+  });
 }
 
 const crawler = new PlaywrightCrawler({
@@ -40,11 +44,12 @@ fs.createReadStream("./data.csv")
   .on("data", async (row) => {
     // console.log(row);
     startUrls.push({
-      url: row[0],
+      url: `${row[0]}people/?keywords=${row[1].replace(" ", "%20")}`,
       userData: {
         // replace all %20 with space
-        designation: row[0].split("=")[1].replace("%20", " "),
+        designation: row[1],
       },
+      uniqueKey: Math.random().toString(),
       useExtendedUniqueKey: true,
     });
   })
