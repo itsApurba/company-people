@@ -44,16 +44,14 @@ npm i
 
 4. **Create `auth` File:**
    - Create a file named `auth` in the root directory (if not present).
-
-5. **Paste and Edit the Cookie:**
    - Paste the copied cookie into the `auth` file.
-   - Remove all keys and values related to `sameSite` from the cookie.
+   
 
 ### 2. Importing the CSV 📊
 
 1. **LinkedIn URL Format:**
-   - The URL format should be `https://www.linkedin.com/company/company-name/people/?keywords=designation%20name`.
-   - Obtain this URL by visiting the LinkedIn company people page, entering the designation, and copying the URL.
+   - The URL format should be `https://www.linkedin.com/company/company-name/`.
+   - Obtain this URL by visiting the LinkedIn company profile page.
 2. **Move and Rename CSV:**
    - Move the CSV file to the root directory.
    - Rename the CSV file to `data.csv` (refer to the example).
@@ -91,11 +89,7 @@ The output file will be generated at
    - Implement an automated process for generating the LinkedIn cookie. 
    - Handle captchas that may be encountered during the cookie generation to ensure seamless automation.
 
-2. **LinkedIn URL Formatting:**
-   - Fix the LinkedIn URL formatting functionality.
-   - Explore options to dynamically construct URLs based on different params.
-
-3. **Direct CSV Retrieval from Google Sheets:**
+2. **Direct CSV Retrieval from Google Sheets:**
    - Develop a feature to directly fetch CSV data from Google Sheets.
 
 ## Additional Information ℹ️
